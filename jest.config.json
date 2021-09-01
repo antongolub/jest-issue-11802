@@ -1,0 +1,22 @@
+{
+  "testEnvironment": "node",
+  "transform": {},
+  "collectCoverage": true,
+  "collectCoverageFrom": [
+    "<rootDir>/src/main/**/*.js"
+  ],
+  "testMatch": [
+    "<rootDir>/src/test/js/**/*.js"
+  ],
+  "testPathIgnorePatterns": [
+    "/node_modules/"
+  ],
+  "moduleFileExtensions": [
+    "js",
+    "jsx",
+    "json",
+    "node",
+    "mjs",
+    "cjs"
+  ]
+}
