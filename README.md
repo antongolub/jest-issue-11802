@@ -76,3 +76,58 @@ at ModuleWrap.<anonymous> (internal/vm/module.js:334:30)
 at processTicksAndRejections (internal/process/task_queues.js:95:5)
 at async Promise.all (index 6)
 ```
+so the error came from
+```js
+// node_modules/jest-runtime/build/index.js
+  async linkAndEvaluateModule(module) {
+    if (module.status === 'unlinked') {
+      // since we might attempt to link the same module in parallel, stick the promise in a weak map so every call to
+      // this method can await it
+      this._esmModuleLinkingMap.set(
+        module,
+        module.link((specifier, referencingModule) =>
+          // right here
+          this.resolveModule(
+            specifier,
+            referencingModule.identifier,
+            referencingModule.context
+          )
+        )
+      );
+    }
+```
+```js
+// ...
+const resolved = this._resolveModule(referencingIdentifier, path);
+
+    if (
+      this._resolver.isCoreModule(resolved) ||
+      this.unstable_shouldLoadAsEsm(resolved)
+    ) {
+      return this.loadEsmModule(resolved, query);
+    }
+```
+```js
+// ...
+  _resolveModule(from, to) {
+    return to ? this._resolver.resolveModule(from, to) : from;
+  }
+```
+```js
+// node_modules/jest-resolve/build/resolver.js
+// ...
+  resolveModule(from, moduleName, options) {
+    const dirname = path().dirname(from);
+    const module =
+      this.resolveStubModuleName(from, moduleName) ||
+      this.resolveModuleFromDirIfExists(dirname, moduleName, options);
+```
+then we're diving into
+```js
+resolveModuleFromDirIfExists()
+```
+Ta-da. `require.resolve` fallback.
+```js
+        const resolvedModule =
+          resolveNodeModule(module) || require.resolve(module);
+```
