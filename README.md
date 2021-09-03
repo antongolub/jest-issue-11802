@@ -63,3 +63,16 @@ Test Suites: 1 failed, 1 total
 Tests:       0 total
 Snapshots:   0 total
 ```
+
+**stacktrace**
+```
+at Resolver.resolveModule (/username/gh/jest-issue-11802/node_modules/jest-resolve/build/resolver.js:314:13)
+at Runtime._resolveModule (/username/gh/jest-issue-11802/node_modules/jest-runtime/build/index.js:1282:32)
+at Runtime.resolveModule (/username/gh/jest-issue-11802/node_modules/jest-runtime/build/index.js:676:27)
+at /username/gh/jest-issue-11802/node_modules/jest-runtime/build/index.js:695:16
+at ModuleWrap.<anonymous> (internal/vm/module.js:321:30)
+at SourceTextModule.<computed> (internal/vm/module.js:320:36)
+at ModuleWrap.<anonymous> (internal/vm/module.js:334:30)
+at processTicksAndRejections (internal/process/task_queues.js:95:5)
+at async Promise.all (index 6)
+```
