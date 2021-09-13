@@ -1,6 +1,11 @@
 # jest-issue-11802
 https://github.com/facebook/jest/pull/11802
 
+### Update
+* [Confirmed](https://github.com/facebook/jest/pull/11802#issuecomment-914381324)
+* [Fixed](https://github.com/facebook/jest/pull/11817)
+* [Released](https://github.com/facebook/jest/releases/tag/v27.1.1)
+
 ### Steps to reproduce the bug
 
 ```
